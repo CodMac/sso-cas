@@ -1,0 +1,21 @@
+#指定日志输出文件
+logging:
+  file: "logs/sso-config.log"
+info:
+  name : "配置中心"
+
+---
+server:
+  #服务端口
+  port: 8888
+  #访问路径
+  context-path: /config
+spring:
+  profiles:
+    #本地配置文件
+    active:
+      #配置文件本地化
+      - native
+  application:
+    #指定应用名称
+    name: sso-config
