@@ -1,0 +1,17 @@
+密钥生成
+keytool -genkeypair -keyalg RSA -keysize 2048 -sigalg SHA1withRSA -validity 36500 -alias cas.server.test.com -keystore /Users/mac/WORK/tomcat.keystore -dname "CN=cas.server.test.com,OU=rocketman,O=mac,L=GuangZhou,ST=GuangDong,C=CN"
+//密钥存放路径：Users/mac/WORK/  密钥文件名称：tomcat.keystore
+
+证书生成
+keytool -exportcert -alias cas.server.test.com -keystore /Users/mac/WORK/tomcat.keystore  -file /Users/mac/WORK/tomcat.cer -rfc
+//证书存放路径：/Users/mac/WORK/   证书文件名称：tomcat.cer
+
+导入cacerts证书库
+keytool -import -alias cas.server.test.com -keystore /Library/Java/JavaVirtualMachines/jdk1.8.0_151.jdk/Contents/Home/jre/lib/security/cacerts -file /Users/mac/WORK/tomcat.cer -trustcacerts
+//证书导入jdk证书库 javaHome为：/Library/Java/JavaVirtualMachines/jdk1.8.0_151.jdk/Contents/Home/jre
+
+检查是否导入成功(检查是否导入成功)
+keytool -list -keystore "/Library/Java/JavaVirtualMachines/jdk1.8.0_151.jdk/Contents/Home/jre/lib/security/cacerts" | findstr/i server
+
+cer证转换为jks
+keytool -import -alias cas.server.test.com -file /Users/mac/WORK/tomcat.cer -keystore /Users/mac/WORK/tomcat.jks 
