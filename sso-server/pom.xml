@@ -31,10 +31,17 @@
 			<artifactId>cas-server-support-jdbc</artifactId>
 			<version>${cas.version}</version>
 		</dependency>
-		<!-- HSQLDB、Oracle、MYSQL、PostgreSQL、MariaDB、Microsoft SQL Server 数据库驱动-->
+		<!-- HSQLDB、Oracle、MYSQL、PostgreSQL、MariaDB、Microsoft SQL Server 数据库驱动 -->
 		<dependency>
 			<groupId>org.apereo.cas</groupId>
 			<artifactId>cas-server-support-jdbc-drivers</artifactId>
+			<version>${cas.version}</version>
+		</dependency>
+
+		<!-- 支持三种校验方式，包括文件存储用户校验器、拒绝用户校验器、shiro校验器 -->
+		<dependency>
+			<groupId>org.apereo.cas</groupId>
+			<artifactId>cas-server-support-generic</artifactId>
 			<version>${cas.version}</version>
 		</dependency>
 
