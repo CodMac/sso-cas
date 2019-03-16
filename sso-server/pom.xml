@@ -24,6 +24,20 @@
 			<type>war</type>
 			<scope>runtime</scope>
 		</dependency>
+
+		<!--新增支持jdbc验证 -->
+		<dependency>
+			<groupId>org.apereo.cas</groupId>
+			<artifactId>cas-server-support-jdbc</artifactId>
+			<version>${cas.version}</version>
+		</dependency>
+		<!-- HSQLDB、Oracle、MYSQL、PostgreSQL、MariaDB、Microsoft SQL Server 数据库驱动-->
+		<dependency>
+			<groupId>org.apereo.cas</groupId>
+			<artifactId>cas-server-support-jdbc-drivers</artifactId>
+			<version>${cas.version}</version>
+		</dependency>
+
 	</dependencies>
 	<dependencyManagement>
 		<dependencies>
