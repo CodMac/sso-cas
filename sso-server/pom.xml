@@ -20,32 +20,75 @@
 		<dependency>
 			<groupId>org.apereo.cas</groupId>
 			<artifactId>cas-server-webapp-tomcat</artifactId>
-			<version>${cas.version}</version>
 			<type>war</type>
 			<scope>runtime</scope>
 		</dependency>
 
-		<!--新增支持jdbc验证 -->
 		<dependency>
 			<groupId>org.apereo.cas</groupId>
 			<artifactId>cas-server-support-jdbc</artifactId>
-			<version>${cas.version}</version>
 		</dependency>
-		<!-- HSQLDB、Oracle、MYSQL、PostgreSQL、MariaDB、Microsoft SQL Server 数据库驱动 -->
 		<dependency>
 			<groupId>org.apereo.cas</groupId>
 			<artifactId>cas-server-support-jdbc-drivers</artifactId>
-			<version>${cas.version}</version>
 		</dependency>
-
-		<!-- 支持三种校验方式，包括文件存储用户校验器、拒绝用户校验器、shiro校验器 -->
+		<!-- 自定义认证的方式 begin -->
+		<dependency>
+			<groupId>org.apereo.cas</groupId>
+			<artifactId>cas-server-core-webflow</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apereo.cas</groupId>
+			<artifactId>cas-server-core-authentication</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apereo.cas</groupId>
+			<artifactId>cas-server-core-authentication-api</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apereo.cas</groupId>
+			<artifactId>cas-server-webapp-config</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<!--连接池 -->
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>druid</artifactId>
+			<version>1.0.28</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.shiro</groupId>
+			<artifactId>shiro-spring</artifactId>
+			<version>1.4.0</version>
+		</dependency>
 		<dependency>
 			<groupId>org.apereo.cas</groupId>
 			<artifactId>cas-server-support-generic</artifactId>
-			<version>${cas.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>5.1.36</version>
+		</dependency>
+		<dependency>
+			<groupId>org.mybatis.spring.boot</groupId>
+			<artifactId>mybatis-spring-boot-starter</artifactId>
+			<exclusions>
+				<exclusion>
+					<groupId>org.springframework.boot</groupId>
+					<artifactId>spring-boot-starter-logging</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>ch.qos.logback</groupId>
+					<artifactId>logback-classic</artifactId>
+				</exclusion>
+			</exclusions>
+			<version>1.1.1</version>
 		</dependency>
 
+
 	</dependencies>
+
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
