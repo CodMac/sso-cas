@@ -12,6 +12,7 @@ public class TestController {
 	@GetMapping("/A")
 	@ResponseBody
 	public String testA(){
-		return "cas testA";
+		return "cas testA from springboot1";
 	}
+	
 }

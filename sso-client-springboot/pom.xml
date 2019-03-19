@@ -32,7 +32,7 @@
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-config-client</artifactId>
 		</dependency>
-		
+
 		<!-- Spring Boot 整合Mybatis -->
 		<dependency>
 			<groupId>org.mybatis.spring.boot</groupId>
@@ -100,7 +100,7 @@
 			<url>https://maven.aliyun.com/nexus/content/groups/public//</url>
 		</repository>
 	</repositories>
-	
+
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
