@@ -46,9 +46,15 @@ public class ShiroAuthenticationConfiguration  implements AuthenticationEventExe
         //启用授权缓存，即缓存AuthorizationInfo信息，默认false
         shiroRealm.setAuthorizationCachingEnabled(false);
         //设置自定义密码校验器
-        shiroRealm.setCredentialsMatcher(new CredentialsMatcher());
+        shiroRealm.setCredentialsMatcher(credentialsMatcher());
         return shiroRealm;
     }
+    
+    @Bean
+    public CredentialsMatcher credentialsMatcher(){
+    	return new CredentialsMatcher();
+    }
+    
 
     /**
      * Spring静态注入

@@ -1,7 +1,9 @@
 package client.pulgins.mvc;
 
 import org.springframework.beans.factory.annotation.Configurable;
+import org.springframework.core.Ordered;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 /**
@@ -22,4 +24,18 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
 		registry.addResourceHandler("/js/**").addResourceLocations("classpath:/js/");
 	}
 
+	/**
+     * 添加视图解析器控制
+     */
+    @Override
+    public void addViewControllers(ViewControllerRegistry registry) {
+        //设定路径"/" 重定向到 "/index"
+        registry.addViewController("/").setViewName("forward:/test/index");
+
+        //设定匹配的优先级
+        registry.setOrder(Ordered.HIGHEST_PRECEDENCE);
+
+        //添加视图控制类
+        super.addViewControllers(registry);
+    }
 }

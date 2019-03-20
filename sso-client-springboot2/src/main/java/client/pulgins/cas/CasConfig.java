@@ -32,7 +32,7 @@ public class CasConfig {
 	    Map<String,String>  initParameters = new HashMap<String, String>();
 	    initParameters.put("casServerLoginUrl", CAS_SERVER_LOGIN_URL);
 	    initParameters.put("serverName", CAS_CLIENT_HOST_URL);
-	    initParameters.put("ignorePattern", "/static/*|testPass/*|login/*");
+	    initParameters.put("ignorePattern", "/static/*|testPass/*");
 	    registration.setInitParameters(initParameters);
 	    // 设定加载的顺序
 	    registration.setOrder(1);

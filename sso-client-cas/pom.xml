@@ -1,12 +1,14 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>zqit</groupId>
-	<artifactId>sso-client-springboot2</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
 
-	<name>sso-client-springboot2</name>
-	<description>A sample web application that exercises the CAS protocol features via the Java CAS Client.</description>
+	<groupId>zqit</groupId>
+	<artifactId>sso-client-cas</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>jar</packaging>
+
+	<name>sso-client-cas</name>
+	<url>http://maven.apache.org</url>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
@@ -15,10 +17,9 @@
 		<relativePath /> <!-- lookup parent from repository -->
 		<!-- 查找顺序：relativePath元素中的地址–本地仓库–远程仓库.设定一个空值将始终从仓库中获取，不从本地路径获取 -->
 	</parent>
-
+	
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<java.cas.client.version>3.5.0</java.cas.client.version>
 		<spring-cloud.version>Dalston.SR5</spring-cloud.version>
 	</properties>
 
@@ -32,6 +33,8 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-thymeleaf</artifactId>
 		</dependency>
+
+		<!-- 统一配置服务器 -->
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-config-client</artifactId>
@@ -60,12 +63,13 @@
 			<artifactId>druid</artifactId>
 			<version>1.0.28</version>
 		</dependency>
-		<!--cas的客户端 -->
+		
 		<dependency>
-			<groupId>net.unicon.cas</groupId>
-			<artifactId>cas-client-autoconfig-support</artifactId>
-			<version>1.4.0-GA</version>
+            <groupId>net.unicon.cas</groupId>
+            <artifactId>cas-client-autoconfig-support</artifactId>
+            <version>1.4.0-GA</version>
 		</dependency>
+
 
 	</dependencies>
 
@@ -96,7 +100,7 @@
 
 	<build>
 		<!--打包后的项目名称 -->
-		<finalName>sso-client-springboot2</finalName>
+		<finalName>sso-client-springboot</finalName>
 		<plugins>
 			<!-- java编译插件 -->
 			<plugin>
