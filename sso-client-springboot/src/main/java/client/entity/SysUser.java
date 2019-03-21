@@ -1,7 +1,13 @@
-package server.entity;
+package client.entity;
 
-public class SysUser{
+import java.io.Serializable;
 
+public class SysUser implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	private Integer id;
 

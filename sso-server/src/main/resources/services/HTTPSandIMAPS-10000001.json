@@ -4,5 +4,8 @@
   "name" : "测试客户端",
   "id" : 10000001,
   "description" : "这是一个测试客户端的服务，所有的https或者http访问都允许通过",
-  "evaluationOrder" : 10000
+  "evaluationOrder" : 10000,
+  "attributeReleasePolicy" : {
+    "@class" : "org.apereo.cas.services.ReturnAllAttributeReleasePolicy"
+  }
 }

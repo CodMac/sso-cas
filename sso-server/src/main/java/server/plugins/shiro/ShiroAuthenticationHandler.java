@@ -1,6 +1,8 @@
 package server.plugins.shiro;
 
 import java.security.GeneralSecurityException;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.security.auth.login.AccountLockedException;
 import javax.security.auth.login.AccountNotFoundException;
@@ -23,12 +25,17 @@ import org.apereo.cas.authentication.RememberMeUsernamePasswordCredential;
 import org.apereo.cas.authentication.UsernamePasswordCredential;
 import org.apereo.cas.authentication.exceptions.AccountDisabledException;
 import org.apereo.cas.authentication.handler.support.AbstractUsernamePasswordAuthenticationHandler;
+import org.apereo.cas.authentication.principal.Principal;
 import org.apereo.cas.authentication.principal.PrincipalFactory;
 import org.apereo.cas.services.ServicesManager;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.alibaba.druid.support.json.JSONUtils;
+import com.fasterxml.jackson.core.JsonProcessingException;
+
 import server.entity.SysUser;
 import server.service.SysUserService;
+import server.utils.JacksonUtil;
 
 /**
  * 自定义验证器
@@ -36,7 +43,10 @@ import server.service.SysUserService;
  *
  */
 public class ShiroAuthenticationHandler extends AbstractUsernamePasswordAuthenticationHandler {
-
+	
+	//自定义返回 用户登录信息 name
+	final private String PRINCIPAL_NAME = "zq-principal";
+	final private String PRINCIPAL_MAP_USER_KEY = "zq-user";
 
 	@Autowired
 	private SysUserService sysUserService;
@@ -59,11 +69,22 @@ public class ShiroAuthenticationHandler extends AbstractUsernamePasswordAuthenti
 			}
 
 			Subject currentUser = getCurrentExecutingSubject();
+			
+			//检测是否登录 - 委托给shiroRealm 
 			currentUser.login(token);
+			
+			String username = currentUser.getPrincipal().toString();
+			SysUser one = new SysUser();
+			one.setUsername(username);
+			SysUser user = sysUserService.findUser(one);
+			
+			//检测角色和权限
+			checkSubjectRolesAndPermissions(user);
 
-			checkSubjectRolesAndPermissions(currentUser);
-
-			return createAuthenticatedSubjectResult(transformedCredential, currentUser);
+			//返回需要的当前登录用户信息到 Principal，客户端可以通过 request.getUserPrincipal(); 获取
+			AuthenticationHandlerExecutionResult subjectResult = createAuthenticatedSubjectResult(transformedCredential, user);
+			return subjectResult;
+			
 		} catch (final UnknownAccountException uae) {
 			throw new AccountNotFoundException(uae.getMessage());
 		} catch (final IncorrectCredentialsException ice) {
@@ -76,11 +97,14 @@ public class ShiroAuthenticationHandler extends AbstractUsernamePasswordAuthenti
 			throw new AccountDisabledException(eae.getMessage());
 		} catch (final AuthenticationException e) {
 			throw new FailedLoginException(e.getMessage());
+		} catch (final JsonProcessingException e) {
+			throw new FailedLoginException("user json 解析失败");
 		}
+		
 	}
 
 	/**
-	 * Check subject roles and permissions. 校验角色和权限
+	 * 检测角色和权限
 	 *
 	 * @param currentUser
 	 *            the current user
@@ -88,13 +112,14 @@ public class ShiroAuthenticationHandler extends AbstractUsernamePasswordAuthenti
 	 *             the failed login exception in case roles or permissions are
 	 *             absent
 	 */
-	protected void checkSubjectRolesAndPermissions(final Subject currentUser) throws FailedLoginException {
-		String username = currentUser.getPrincipal().toString();
+	protected void checkSubjectRolesAndPermissions(SysUser user) throws FailedLoginException {
 		
-		SysUser one = new SysUser();
-		one.setUsername(username);
-		SysUser user = sysUserService.findUser(one);
-		System.out.println(user.getUsername());
+		if(user == null){
+			// 否则抛出异常,也可以自定义异常,返回不同的提示
+			throw new FailedLoginException();
+		}
+		
+//		String username = user.getUsername();
 		
 		//检测是否存在角色/权限
 		Boolean havePermission = true; 
@@ -109,18 +134,25 @@ public class ShiroAuthenticationHandler extends AbstractUsernamePasswordAuthenti
 	}
 
 	/**
-	 * Create authenticated subject result.
+	 * 返回需要的当前登录用户信息到 Principal
 	 *
 	 * @param credential
 	 *            the credential
 	 * @param currentUser
 	 *            the current user
 	 * @return the handler result
+	 * @throws JsonProcessingException 
 	 */
 	protected AuthenticationHandlerExecutionResult createAuthenticatedSubjectResult(final Credential credential,
-			final Subject currentUser) {
-		final String username = currentUser.getPrincipal().toString();
-		return createHandlerResult(credential, this.principalFactory.createPrincipal(username));
+			SysUser user) throws JsonProcessingException {
+		
+		//自定义的返回用户信息
+		String userJson = JacksonUtil.defaultInstance().pojo2json(user);
+		Map<String, Object> zqPrincipal = new HashMap<String, Object>();
+		zqPrincipal.put(PRINCIPAL_MAP_USER_KEY, userJson);
+		Principal principal = this.principalFactory.createPrincipal(PRINCIPAL_NAME, zqPrincipal);
+		
+		return createHandlerResult(credential, principal);
 	}
 
 	/**
