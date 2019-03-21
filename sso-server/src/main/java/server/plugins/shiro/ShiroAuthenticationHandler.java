@@ -30,7 +30,6 @@ import org.apereo.cas.authentication.principal.PrincipalFactory;
 import org.apereo.cas.services.ServicesManager;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.alibaba.druid.support.json.JSONUtils;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
 import server.entity.SysUser;
