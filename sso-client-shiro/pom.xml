@@ -87,7 +87,15 @@
             <artifactId>pac4j-http</artifactId>
             <version>${pac4j.version}</version>
         </dependency>
+        <!--shiro + cas -->
 
+		<!-- commons-lang3 start -->
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>3.3.2</version>
+		</dependency>
+		<!-- commons-lang3 end -->
 	</dependencies>
 
 	<!--为了加快速度，修改成国内的代理 -->

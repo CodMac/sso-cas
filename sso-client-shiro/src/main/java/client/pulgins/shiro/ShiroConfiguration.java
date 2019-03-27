@@ -225,7 +225,24 @@ public class ShiroConfiguration extends AbstractShiroWebFilterConfiguration {
         filterRegistrationBean.addUrlPatterns("/*");
         return filterRegistrationBean;
     }
- 
+    
+    /**
+	 * 自定义Axios权限拦截器 - vue前端使用axios发送异步请求
+	 * @return
+	 */
+//	@Bean
+//	public FilterRegistrationBean ajaxAuthFilterRegistration() {
+//		FilterRegistrationBean registration = new FilterRegistrationBean();
+//		
+//		registration.setFilter(new AxiosAuthFilter());
+//		registration.addUrlPatterns("/*");
+//		registration.setEnabled(true);
+//		registration.setName("ajaxAuthFilter");
+//		registration.setOrder(0);
+//
+//		return registration;
+//	}
+    
     @Bean(name = "shiroFilter")
     protected ShiroFilterFactoryBean shiroFilterFactoryBean(DefaultWebSecurityManager securityManager, Config config) {
         ShiroFilterFactoryBean filterFactoryBean = super.shiroFilterFactoryBean();
@@ -233,6 +250,7 @@ public class ShiroConfiguration extends AbstractShiroWebFilterConfiguration {
  
         //过滤器设置
         Map<String, Filter> filters = new HashMap<String, Filter>();
+        
         SecurityFilter securityFilter = new SecurityFilter();
         securityFilter.setClients("cas,rest,jwt");
         securityFilter.setConfig(config);
@@ -241,7 +259,7 @@ public class ShiroConfiguration extends AbstractShiroWebFilterConfiguration {
         CallbackFilter callbackFilter = new CallbackFilter();
         callbackFilter.setConfig(config);
         filters.put("callbackFilter", callbackFilter);
- 
+        
         filterFactoryBean.setFilters(filters);
  
  
