@@ -17,13 +17,14 @@
 	<description>CAS认证服务，负责各系统的鉴权的鉴权</description>
 
 	<dependencies>
+		<!-- cas服务端 start -->
 		<dependency>
 			<groupId>org.apereo.cas</groupId>
 			<artifactId>cas-server-webapp-tomcat</artifactId>
 			<type>war</type>
 			<scope>runtime</scope>
 		</dependency>
-		<dependency>
+		<dependency><!-- cas支持jdbc认证 -->
 			<groupId>org.apereo.cas</groupId>
 			<artifactId>cas-server-support-jdbc</artifactId>
 		</dependency>
@@ -31,27 +32,14 @@
 			<groupId>org.apereo.cas</groupId>
 			<artifactId>cas-server-support-jdbc-drivers</artifactId>
 		</dependency>
-		
-		<!--连接池 -->
-		<dependency>
-			<groupId>com.alibaba</groupId>
-			<artifactId>druid</artifactId>
-			<version>1.0.28</version>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.shiro</groupId>
-			<artifactId>shiro-spring</artifactId>
-			<version>1.4.0</version>
-		</dependency>
-<!-- 		<dependency> -->
-<!-- 			<groupId>org.apereo.cas</groupId> -->
-<!-- 			<artifactId>cas-server-support-generic</artifactId> -->
-<!-- 		</dependency> -->
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
 			<version>5.1.36</version>
 		</dependency>
+		<!-- cas服务端 end -->
+
+		<!-- mybatis start -->
 		<dependency>
 			<groupId>org.mybatis.spring.boot</groupId>
 			<artifactId>mybatis-spring-boot-starter</artifactId>
@@ -67,8 +55,36 @@
 			</exclusions>
 			<version>1.1.1</version>
 		</dependency>
+		<dependency><!--连接池 -->
+			<groupId>com.alibaba</groupId>
+			<artifactId>druid</artifactId>
+			<version>1.0.28</version>
+		</dependency>
+		<!-- mybatis end -->
 
+		<!-- shiro start -->
+		<dependency>
+			<groupId>org.apache.shiro</groupId>
+			<artifactId>shiro-spring</artifactId>
+			<version>1.4.0</version>
+		</dependency>
+		<!-- shiro end -->
 
+		<!-- cas Service manage start -->
+		<dependency>
+			<groupId>org.apereo.cas</groupId>
+			<artifactId>cas-server-support-jpa-service-registry</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apereo.cas</groupId>
+			<artifactId>cas-server-core-services-api</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apereo.cas</groupId>
+			<artifactId>cas-server-core-authentication-attributes</artifactId>
+		</dependency>
+		<!-- cas Service manage end -->
+		
 	</dependencies>
 
 	<dependencyManagement>
