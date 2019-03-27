@@ -1,0 +1,14 @@
+package client;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.web.servlet.ServletComponentScan;
+
+@ServletComponentScan
+@SpringBootApplication
+public class ShiroClientApplication {
+
+    public static void main(String[] args){
+        SpringApplication.run(ShiroClientApplication.class,args);
+    }
+}
