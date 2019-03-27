@@ -66,6 +66,7 @@
 			<artifactId>cas-client-autoconfig-support</artifactId>
 			<version>1.4.0-GA</version>
 		</dependency>
+		
 
 	</dependencies>
 

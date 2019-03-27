@@ -1,8 +1,6 @@
 package server.plugins.shiro;
 
 import java.security.GeneralSecurityException;
-import java.util.HashMap;
-import java.util.Map;
 
 import javax.security.auth.login.AccountLockedException;
 import javax.security.auth.login.AccountNotFoundException;
@@ -34,7 +32,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 
 import server.entity.SysUser;
 import server.service.SysUserService;
-import server.utils.JacksonUtil;
 
 /**
  * 自定义验证器
@@ -43,9 +40,6 @@ import server.utils.JacksonUtil;
  */
 public class ShiroAuthenticationHandler extends AbstractUsernamePasswordAuthenticationHandler {
 	
-	//自定义返回 用户登录信息 name
-	final private String PRINCIPAL_NAME = "zq-principal";
-	final private String PRINCIPAL_MAP_USER_KEY = "zq-user";
 
 	@Autowired
 	private SysUserService sysUserService;
@@ -82,6 +76,7 @@ public class ShiroAuthenticationHandler extends AbstractUsernamePasswordAuthenti
 
 			//返回需要的当前登录用户信息到 Principal，客户端可以通过 request.getUserPrincipal(); 获取
 			AuthenticationHandlerExecutionResult subjectResult = createAuthenticatedSubjectResult(transformedCredential, user);
+			
 			return subjectResult;
 			
 		} catch (final UnknownAccountException uae) {
@@ -145,11 +140,11 @@ public class ShiroAuthenticationHandler extends AbstractUsernamePasswordAuthenti
 	protected AuthenticationHandlerExecutionResult createAuthenticatedSubjectResult(final Credential credential,
 			SysUser user) throws JsonProcessingException {
 		
-		//自定义的返回用户信息
-		String userJson = JacksonUtil.defaultInstance().pojo2json(user);
-		Map<String, Object> zqPrincipal = new HashMap<String, Object>();
-		zqPrincipal.put(PRINCIPAL_MAP_USER_KEY, userJson);
-		Principal principal = this.principalFactory.createPrincipal(PRINCIPAL_NAME, zqPrincipal);
+		//自定义的返回用户信息 - json
+//		String userJson = JacksonUtil.defaultInstance().pojo2json(user);
+//		Principal principal = this.principalFactory.createPrincipal(userJson);
+		//自定义的返回用户信息 - username
+		Principal principal = this.principalFactory.createPrincipal(user.getUsername());
 		
 		return createHandlerResult(credential, principal);
 	}
