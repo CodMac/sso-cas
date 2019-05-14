@@ -4,6 +4,7 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.web.servlet.AdviceFilter;
@@ -30,12 +31,15 @@ public class AxiosAuthFilter extends AdviceFilter {
 		String zqRequestType = request.getHeader("zq-request-type");
 		
 		// 获得当前的cas登录信息 - 无法得到cas登录信息，还没到cas校验的filter
-		AttributePrincipal principal = (AttributePrincipal) request.getUserPrincipal();
+		//AttributePrincipal principal = (AttributePrincipal) request.getUserPrincipal();
 		
 		// 获得当前的shiro代理cas登录信息 - 无法得到cas登录信息，还没到cas校验的shiroFilter
 		//Pac4jPrincipal principalShiro = (Pac4jPrincipal) SecurityUtils.getSubject().getPrincipal();
 		
-		if (principal == null && StringUtils.equals(zqRequestType, "axios")) {
+		//从session中获取登录信息 
+		HttpSession session = request.getSession(false);
+		
+		if (session == null && StringUtils.equals(zqRequestType, "axios")) {
 			response.setHeader("authCode", "401");// 打上权限校验标记
 			response.getWriter().append("No Access").flush();
 			return false;
