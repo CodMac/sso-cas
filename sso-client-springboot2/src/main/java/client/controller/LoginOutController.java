@@ -34,14 +34,14 @@ public class LoginOutController {
 	public String outHand(HttpSession session) {
 		session.invalidate();
 		// 退出登录后，跳转到退成成功的页面，不走默认页面
-		return "redirect:http://127.0.0.1:8081/cas/logout?service=http://localhost:8091/loginOut/outHandPageSuccess";
+		return "redirect:http://127.0.0.1:8081/cas/logout?service=http://localhost:8092/loginOut/outHandPageSuccess";
 	}
 
 	// 登出跳转到指定路径
 	@GetMapping("/outHandPageSuccess")
 	@ResponseBody
 	public String outHandPageSuccess() {
-		return "cas outHandPageSuccess - 登出跳转到指定路径 - 8091";
+		return "cas outHandPageSuccess - 登出跳转到指定路径 - 8092";
 	}
 
 }

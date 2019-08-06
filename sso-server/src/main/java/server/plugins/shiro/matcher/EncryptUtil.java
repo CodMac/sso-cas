@@ -38,6 +38,6 @@ public class EncryptUtil {
 	}
 	
 	public static void main(String[] args) {
-		System.out.println(encrypt32("1111","mac"));
+		System.out.println(encrypt32("mac","mac"));
 	}
 }

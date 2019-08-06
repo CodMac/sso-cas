@@ -34,7 +34,8 @@ public class ShiroRealm extends AuthorizingRealm {
      * @return
      * @throws AuthenticationException
      */
-    @Override
+    @SuppressWarnings("unlikely-arg-type")
+	@Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
 
         //获取用户名密码 第一种方式

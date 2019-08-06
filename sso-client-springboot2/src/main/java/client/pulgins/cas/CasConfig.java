@@ -4,8 +4,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.jasig.cas.client.authentication.AuthenticationFilter;
+import org.jasig.cas.client.session.SingleSignOutFilter;
+import org.jasig.cas.client.session.SingleSignOutHttpSessionListener;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
+import org.springframework.boot.web.servlet.ServletListenerRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -38,4 +41,47 @@ public class CasConfig {
 	    registration.setOrder(1);
 	    return registration;
 	}
+	
+	/**
+	 * 单点登出filter
+	 * @return
+	 */
+	@Bean
+    public SingleSignOutFilter singleSignOutFilter(){
+		SingleSignOutFilter singleSignOutFilter = new SingleSignOutFilter();
+		singleSignOutFilter.setCasServerUrlPrefix(CAS_SERVER_URL_PREFIX);
+        singleSignOutFilter.setIgnoreInitConfiguration(true);
+        return singleSignOutFilter;
+    }
+    @Bean
+    public FilterRegistrationBean singleSignOutFilterBean(){
+        FilterRegistrationBean filterRegistrationBean = new FilterRegistrationBean();
+        filterRegistrationBean.setFilter(singleSignOutFilter());
+//        filterRegistrationBean.addInitParameter("targetFilterLifecycle","true")
+        filterRegistrationBean.setEnabled(true);
+        filterRegistrationBean.addUrlPatterns("/*");
+        filterRegistrationBean.setOrder(1);
+        filterRegistrationBean.setName("singleFilter");
+        System.out.println("================================singleFilter执行");
+        return filterRegistrationBean;
+    }
+    /**
+     * 单点登出Listener
+     * @return
+     */
+    @Bean
+    public SingleSignOutHttpSessionListener singleSignOutHttpSessionListener(){
+        return new SingleSignOutHttpSessionListener();
+    }
+    @Bean
+    public ServletListenerRegistrationBean<SingleSignOutHttpSessionListener> singleSignOutHttpSessionListenerBean(){
+        ServletListenerRegistrationBean<SingleSignOutHttpSessionListener> listenerRegistrationBean= new ServletListenerRegistrationBean<>();
+        listenerRegistrationBean.setEnabled(true);
+        listenerRegistrationBean.setListener(singleSignOutHttpSessionListener());
+        listenerRegistrationBean.setOrder(3);
+        listenerRegistrationBean.setName("singleListener");
+        System.out.println("================================singleListener执行");
+        return listenerRegistrationBean;
+    }
+    
 }
