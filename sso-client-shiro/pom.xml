@@ -18,7 +18,7 @@
 		<spring-cloud.version>Dalston.SR5</spring-cloud.version>
 		<shiro.version>1.4.0</shiro.version>
         <buji.version>3.0.0</buji.version>
-        <pac4j.version>2.1.0</pac4j.version>
+        <pac4j.version>4.5.9</pac4j.version>
 	</properties>
 	<dependencies>
 		<!-- 添加spring-web的依赖，直接就可以使用springmvc了 -->
